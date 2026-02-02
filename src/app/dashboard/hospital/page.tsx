@@ -1,0 +1,139 @@
+'use client';
+
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { MoreHorizontal } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { alerts } from '@/lib/data';
+import { formatDistanceToNow } from 'date-fns';
+
+const chartData = [
+  { status: 'Pending', count: alerts.filter(a => a.status === 'pending').length },
+  { status: 'Dispatched', count: alerts.filter(a => a.status === 'dispatched').length },
+  { status: 'On-Site', count: alerts.filter(a => a.status === 'on-site').length },
+  { status: 'Transporting', count: alerts.filter(a => a.status === 'transporting').length },
+  { status: 'Resolved', count: alerts.filter(a => a.status === 'resolved').length },
+];
+
+export default function HospitalDashboard() {
+  return (
+    <div className="flex flex-col gap-6">
+      <div>
+        <h1 className="text-2xl font-semibold">Hospital Staff Dashboard</h1>
+        <p className="text-muted-foreground">Overview of incoming patients and resource status.</p>
+      </div>
+
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <Card>
+          <CardHeader>
+            <CardTitle>Incoming Patients</CardTitle>
+            <CardDescription>Currently en route</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p className="text-4xl font-bold">{alerts.filter(a => a.status === 'transporting').length}</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Pending Alerts</CardTitle>
+            <CardDescription>Awaiting dispatch</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p className="text-4xl font-bold">{alerts.filter(a => a.status === 'pending').length}</p>
+          </CardContent>
+        </Card>
+        <Card className="lg:col-span-2">
+          <CardHeader>
+            <CardTitle>Alerts by Status</CardTitle>
+            <CardDescription>A summary of all active alerts.</CardDescription>
+          </CardHeader>
+          <CardContent className="h-[100px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                <XAxis dataKey="status" fontSize={10} tickLine={false} axisLine={false} />
+                <YAxis fontSize={10} tickLine={false} axisLine={false} />
+                <Tooltip cursor={{ fill: 'hsl(var(--muted))' }} />
+                <Bar dataKey="count" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+      </div>
+      
+      <Card>
+        <CardHeader>
+          <CardTitle>Incoming Emergency Details</CardTitle>
+          <CardDescription>
+            List of patients currently being transported to the hospital.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Patient</TableHead>
+                <TableHead>From Location</TableHead>
+                <TableHead>Responder</TableHead>
+                <TableHead>Time Initiated</TableHead>
+                <TableHead>
+                  <span className="sr-only">Actions</span>
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {alerts.filter(a => a.status === 'transporting').map((alert) => (
+                <TableRow key={alert.id}>
+                  <TableCell className="font-medium">{alert.patientName}</TableCell>
+                  <TableCell>{alert.location}</TableCell>
+                  <TableCell>{alert.responderName}</TableCell>
+                  <TableCell>
+                    {formatDistanceToNow(new Date(alert.timestamp), { addSuffix: true })}
+                  </TableCell>
+                  <TableCell>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button aria-haspopup="true" size="icon" variant="ghost">
+                          <MoreHorizontal className="h-4 w-4" />
+                          <span className="sr-only">Toggle menu</span>
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                        <DropdownMenuItem>Prepare ER</DropdownMenuItem>
+                        <DropdownMenuItem>View Vitals</DropdownMenuItem>
+                        <DropdownMenuItem>Contact Responder</DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
