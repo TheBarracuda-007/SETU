@@ -1,3 +1,5 @@
+'use client';
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,23 +26,27 @@ import { SetuLogo } from "@/components/setu-logo";
 import { NavLinks } from "@/components/dashboard/nav-links";
 import { Bell, LifeBuoy, LogOut, Settings, User } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
+  const role = pathname.split('/')[2];
+
   return (
     <SidebarProvider>
       <Sidebar>
         <SidebarHeader className="border-b">
           <div className="flex items-center gap-2 p-2">
             <SetuLogo className="size-8" />
-            <span className="text-lg font-semibold whitespace-nowrap">SETU Connect</span>
+            <span className="text-lg font-semibold whitespace-nowrap">SETU</span>
           </div>
         </SidebarHeader>
         <SidebarContent>
-          <NavLinks />
+          <NavLinks role={role} />
         </SidebarContent>
         <SidebarFooter className="border-t">
           <SidebarMenu>

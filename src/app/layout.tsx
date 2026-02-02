@@ -4,7 +4,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
 
 export const metadata: Metadata = {
-  title: 'SETU Connect',
+  title: 'SETU',
   description: 'IOT based emergency response system',
 };
 

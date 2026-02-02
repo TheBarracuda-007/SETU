@@ -47,7 +47,7 @@ export default function LoginPage() {
       <Card className="w-full max-w-sm">
         <CardHeader className="items-center text-center">
           <SetuLogo />
-          <CardTitle className="text-2xl font-bold">SETU Connect</CardTitle>
+          <CardTitle className="text-2xl font-bold">SETU</CardTitle>
           <CardDescription>
             Sign in as a <span className="font-semibold">{roleName}</span>
           </CardDescription>
@@ -60,11 +60,12 @@ export default function LoginPage() {
               type="email"
               placeholder="m@example.com"
               required
+              suppressHydrationWarning
             />
           </div>
           <div className="grid gap-2">
             <Label htmlFor="password">Password</Label>
-            <Input id="password" type="password" required />
+            <Input id="password" type="password" required suppressHydrationWarning />
           </div>
         </CardContent>
         <CardFooter>

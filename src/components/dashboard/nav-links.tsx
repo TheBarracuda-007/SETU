@@ -5,16 +5,20 @@ import { Home, UserCircle, Stethoscope, Hospital, Shield } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const navLinks = [
-  { href: "/dashboard", label: "Dashboard Hub", icon: Home },
-  { href: "/dashboard/patient", label: "Patient", icon: UserCircle },
-  { href: "/dashboard/responder", label: "First Responder", icon: Stethoscope },
-  { href: "/dashboard/hospital", label: "Hospital Staff", icon: Hospital },
-  { href: "/dashboard/admin", label: "Admin", icon: Shield },
+const allNavLinks = [
+  { href: "/dashboard", label: "Dashboard Hub", icon: Home, role: 'any' },
+  { href: "/dashboard/patient", label: "Patient", icon: UserCircle, role: 'patient' },
+  { href: "/dashboard/responder", label: "First Responder", icon: Stethoscope, role: 'responder' },
+  { href: "/dashboard/hospital", label: "Hospital Staff", icon: Hospital, role: 'hospital' },
+  { href: "/dashboard/admin", label: "Admin", icon: Shield, role: 'admin' },
 ];
 
-export function NavLinks() {
+export function NavLinks({ role }: { role?: string }) {
   const pathname = usePathname();
+
+  const navLinks = role
+    ? allNavLinks.filter(link => link.role === 'any' || link.role === role)
+    : allNavLinks;
 
   return (
     <SidebarMenu>

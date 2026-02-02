@@ -41,7 +41,7 @@ export default function SelectRolePage() {
     <main className="flex min-h-screen flex-col items-center justify-center gap-8 p-4">
         <div className="flex flex-col items-center text-center">
             <SetuLogo className="size-12" />
-            <h1 className="text-3xl font-bold mt-4">Welcome to SETU Connect</h1>
+            <h1 className="text-3xl font-bold mt-4">Welcome to SETU</h1>
             <p className="mt-2 text-muted-foreground max-w-lg">
                 A unified platform for critical patient data transfer. Please select your role to continue.
             </p>
