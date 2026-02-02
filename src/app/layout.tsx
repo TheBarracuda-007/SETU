@@ -1,6 +1,8 @@
 import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
+import { FirebaseProvider } from '@/firebase';
+import { initializeFirebase } from '@/firebase';
 
 export const metadata: Metadata = {
   title: 'SETU Connect',
@@ -12,6 +14,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const firebase = initializeFirebase();
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -20,8 +23,10 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased">
-        {children}
-        <Toaster />
+        <FirebaseProvider value={firebase}>
+          {children}
+          <Toaster />
+        </FirebaseProvider>
       </body>
     </html>
   );
