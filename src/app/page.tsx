@@ -1,86 +1,75 @@
-'use client';
-
-import { useState } from 'react';
-import Link from 'next/link';
 import {
   Card,
-  CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { ArrowRight, Hospital, Shield, Stethoscope, UserCircle } from 'lucide-react';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { SetuLogo } from '@/components/setu-logo';
 
-export default function LoginPage() {
-  const [role, setRole] = useState('patient');
+const roleCards = [
+  {
+    title: "Patient",
+    description: "Login to manage your profile and medical history.",
+    href: "/login/patient",
+    icon: UserCircle,
+  },
+  {
+    title: "First Responder",
+    description: "Login to create and manage patient cases.",
+    href: "/login/responder",
+    icon: Stethoscope,
+  },
+  {
+    title: "Hospital Staff",
+    description: "Login to monitor incoming patient cases.",
+    href: "/login/hospital",
+    icon: Hospital,
+  },
+  {
+    title: "Administrator",
+    description: "Login to manage users and system settings.",
+    href: "/login/admin",
+    icon: Shield,
+  },
+];
 
-  const loginRoutes: { [key: string]: string } = {
-    patient: '/dashboard/patient',
-    responder: '/dashboard/responder',
-    hospital_staff: '/dashboard/hospital',
-    admin: '/dashboard/admin',
-  };
-
-  const loginUrl = loginRoutes[role] || '/dashboard';
-
+export default function SelectRolePage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-4">
-      <Card className="w-full max-w-sm">
-        <CardHeader className="items-center text-center">
-          <SetuLogo />
-          <CardTitle className="text-2xl font-bold">SETU Connect</CardTitle>
-          <CardDescription>
-            Sign in to the emergency response system
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="grid gap-4">
-          <div className="grid gap-2">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="m@example.com"
-              required
-            />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="password">Password</Label>
-            <Input id="password" type="password" required />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="role">Login as</Label>
-            <Select value={role} onValueChange={setRole}>
-              <SelectTrigger id="role">
-                <SelectValue placeholder="Select a role" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="patient">Patient</SelectItem>
-                <SelectItem value="responder">First Responder</SelectItem>
-                <SelectItem value="hospital_staff">Hospital Staff</SelectItem>
-                <SelectItem value="admin">Admin</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </CardContent>
-        <CardFooter>
-          <Button asChild className="w-full">
-            <Link href={loginUrl}>Login</Link>
-          </Button>
-        </CardFooter>
-      </Card>
-      <p className="mt-4 text-center text-sm text-muted-foreground">
-        This is a simulated login. No real authentication is performed.
+    <main className="flex min-h-screen flex-col items-center justify-center gap-8 p-4">
+        <div className="flex flex-col items-center text-center">
+            <SetuLogo className="size-12" />
+            <h1 className="text-3xl font-bold mt-4">Welcome to SETU Connect</h1>
+            <p className="mt-2 text-muted-foreground max-w-lg">
+                A unified platform for critical patient data transfer. Please select your role to continue.
+            </p>
+        </div>
+      <div className="grid w-full max-w-4xl gap-4 md:grid-cols-2 lg:grid-cols-4">
+        {roleCards.map((card) => (
+          <Card key={card.title} className="flex flex-col">
+            <CardHeader className="flex-1">
+              <div className="flex items-center gap-4">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
+                  <card.icon className="h-6 w-6" />
+                </div>
+                <CardTitle>{card.title}</CardTitle>
+              </div>
+              <CardDescription className="pt-2">{card.description}</CardDescription>
+            </CardHeader>
+            <div className="p-6 pt-0">
+                <Button asChild className="w-full">
+                   <Link href={card.href}>
+                    Login <ArrowRight className="ml-2 h-4 w-4" />
+                   </Link>
+                </Button>
+            </div>
+          </Card>
+        ))}
+      </div>
+       <p className="mt-4 text-center text-sm text-muted-foreground">
+        This is a simulated login flow. No real authentication is performed.
       </p>
     </main>
   );
