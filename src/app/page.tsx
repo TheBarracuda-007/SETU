@@ -52,12 +52,11 @@ export default function LoginPage() {
               type="email"
               placeholder="m@example.com"
               required
-              defaultValue="user@example.com"
             />
           </div>
           <div className="grid gap-2">
             <Label htmlFor="password">Password</Label>
-            <Input id="password" type="password" required defaultValue="password" />
+            <Input id="password" type="password" required />
           </div>
           <div className="grid gap-2">
             <Label htmlFor="role">Login as</Label>

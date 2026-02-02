@@ -41,7 +41,7 @@ export default function AdminDashboard() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold">Admin Dashboard</h1>
-          <p className="text-muted-foreground">Manage users and system settings.</p>
+          <p className="text-muted-foreground">Manage users, data, and system settings.</p>
         </div>
         <Button>
           <PlusCircle className="h-4 w-4 mr-2"/>
@@ -53,7 +53,7 @@ export default function AdminDashboard() {
         <CardHeader>
           <CardTitle>User Management</CardTitle>
           <CardDescription>
-            A list of all users in the system.
+            Add, edit, or remove users and their permissions.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -96,10 +96,10 @@ export default function AdminDashboard() {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
+                        <DropdownMenuItem>Edit User</DropdownMenuItem>
                         <DropdownMenuItem>Change Permissions</DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
+                        <DropdownMenuItem className="text-destructive">Delete User</DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>

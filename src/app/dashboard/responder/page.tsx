@@ -1,5 +1,5 @@
 import { formatDistanceToNow } from 'date-fns';
-import { MoreHorizontal } from 'lucide-react';
+import { MoreHorizontal, PlusCircle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -42,15 +42,21 @@ export default function ResponderDashboard() {
   
   return (
     <div className="flex flex-col gap-6">
-      <div>
-        <h1 className="text-2xl font-semibold">First Responder Dashboard</h1>
-        <p className="text-muted-foreground">Manage and respond to incoming alerts.</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-semibold">First Responder Dashboard</h1>
+          <p className="text-muted-foreground">Create and manage patient cases.</p>
+        </div>
+        <Button>
+          <PlusCircle className="h-4 w-4 mr-2" />
+          Create Alert
+        </Button>
       </div>
       <Card>
         <CardHeader>
-          <CardTitle>Active Emergency Alerts</CardTitle>
+          <CardTitle>Active Cases</CardTitle>
           <CardDescription>
-            A list of current emergencies requiring your attention.
+            A list of current cases you are handling.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -89,9 +95,9 @@ export default function ResponderDashboard() {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem>Acknowledge</DropdownMenuItem>
+                        <DropdownMenuItem>Add Complication/Note</DropdownMenuItem>
                         <DropdownMenuItem>Update Status</DropdownMenuItem>
-                        <DropdownMenuItem>View Details</DropdownMenuItem>
+                        <DropdownMenuItem>View Full History</DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>

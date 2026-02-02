@@ -12,25 +12,25 @@ import { Button } from '@/components/ui/button';
 const roleCards = [
   {
     title: "Patient",
-    description: "Manage your profile and request assistance.",
+    description: "Manage your profile and view your medical history.",
     href: "/dashboard/patient",
     icon: UserCircle,
   },
   {
     title: "First Responder",
-    description: "View and respond to emergency alerts.",
+    description: "Create and manage patient cases in the field.",
     href: "/dashboard/responder",
     icon: Stethoscope,
   },
   {
     title: "Hospital Staff",
-    description: "Monitor incoming patients and manage resources.",
+    description: "Accept and monitor incoming patient cases.",
     href: "/dashboard/hospital",
     icon: Hospital,
   },
   {
     title: "Administrator",
-    description: "Manage users, permissions, and system settings.",
+    description: "Manage users, data permissions, and system settings.",
     href: "/dashboard/admin",
     icon: Shield,
   },
@@ -53,8 +53,7 @@ export default function DashboardHub() {
             Welcome to SETU Connect
           </h1>
           <p className="mt-2 max-w-lg text-lg text-primary-foreground/90">
-            Your central hub for emergency response coordination. Select a role
-            below to view the corresponding dashboard.
+            A unified platform for critical patient data transfer, from the field to the hospital.
           </p>
         </div>
       </div>

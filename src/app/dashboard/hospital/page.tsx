@@ -28,6 +28,7 @@ import {
 } from '@/components/ui/table';
 import { alerts } from '@/lib/data';
 import { formatDistanceToNow } from 'date-fns';
+import React, { useState } from 'react';
 
 const chartData = [
   { status: 'Pending', count: alerts.filter(a => a.status === 'pending').length },
@@ -38,6 +39,14 @@ const chartData = [
 ];
 
 export default function HospitalDashboard() {
+  const [acceptedAlerts, setAcceptedAlerts] = useState<string[]>([]);
+
+  const handleAccept = (alertId: string) => {
+    setAcceptedAlerts(prev => [...prev, alertId]);
+  };
+  
+  const incomingPatients = alerts.filter(a => a.status === 'transporting' || a.status === 'on-site');
+
   return (
     <div className="flex flex-col gap-6">
       <div>
@@ -58,7 +67,7 @@ export default function HospitalDashboard() {
         <Card>
           <CardHeader>
             <CardTitle>Pending Alerts</CardTitle>
-            <CardDescription>Awaiting dispatch</CardDescription>
+            <CardDescription>Nearby incidents awaiting hospital acceptance</CardDescription>
           </CardHeader>
           <CardContent>
             <p className="text-4xl font-bold">{alerts.filter(a => a.status === 'pending').length}</p>
@@ -85,16 +94,16 @@ export default function HospitalDashboard() {
       
       <Card>
         <CardHeader>
-          <CardTitle>Incoming Emergency Details</CardTitle>
+          <CardTitle>Incoming Patient Alerts</CardTitle>
           <CardDescription>
-            List of patients currently being transported to the hospital.
+            Anonymized list of patients en route. Accept a case to view full details.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Patient</TableHead>
+                <TableHead>Patient ID</TableHead>
                 <TableHead>From Location</TableHead>
                 <TableHead>Responder</TableHead>
                 <TableHead>Time Initiated</TableHead>
@@ -104,9 +113,11 @@ export default function HospitalDashboard() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {alerts.filter(a => a.status === 'transporting').map((alert) => (
+              {incomingPatients.map((alert) => (
                 <TableRow key={alert.id}>
-                  <TableCell className="font-medium">{alert.patientName}</TableCell>
+                  <TableCell className="font-medium">
+                    {acceptedAlerts.includes(alert.id) ? alert.patientName : `Patient #${alert.id.split('_')[1]}`}
+                  </TableCell>
                   <TableCell>{alert.location}</TableCell>
                   <TableCell>{alert.responderName}</TableCell>
                   <TableCell>
@@ -122,9 +133,17 @@ export default function HospitalDashboard() {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem>Prepare ER</DropdownMenuItem>
-                        <DropdownMenuItem>View Vitals</DropdownMenuItem>
-                        <DropdownMenuItem>Contact Responder</DropdownMenuItem>
+                        {!acceptedAlerts.includes(alert.id) ? (
+                          <DropdownMenuItem onClick={() => handleAccept(alert.id)}>
+                            Accept Case
+                          </DropdownMenuItem>
+                        ) : (
+                          <>
+                            <DropdownMenuItem>Prepare ER</DropdownMenuItem>
+                            <DropdownMenuItem>View Full History</DropdownMenuItem>
+                            <DropdownMenuItem>Add Note</DropdownMenuItem>
+                          </>
+                        )}
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>
