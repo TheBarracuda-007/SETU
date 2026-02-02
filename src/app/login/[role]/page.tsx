@@ -51,7 +51,7 @@ export default function LoginPage() {
           <CardDescription>
             Sign in as a <span className="font-semibold">{roleName}</span>
           </CardDescription>
-        </Header>
+        </CardHeader>
         <CardContent className="grid gap-4">
           <div className="grid gap-2">
             <Label htmlFor="email">Email</Label>
