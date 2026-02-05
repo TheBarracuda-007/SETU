@@ -33,6 +33,7 @@ export default function LoginPage() {
   }
 
   const loginUrl = `/dashboard/${role}`;
+  const signupUrl = `/signup/${role}`;
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-4 bg-background">
@@ -73,7 +74,7 @@ export default function LoginPage() {
             <Link href={loginUrl}>Login</Link>
           </Button>
           <Button asChild className="w-full" variant="outline">
-            <Link href="#">Sign Up</Link>
+            <Link href={signupUrl}>Sign Up</Link>
           </Button>
         </CardFooter>
       </Card>
