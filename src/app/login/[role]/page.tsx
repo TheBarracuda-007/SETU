@@ -49,7 +49,7 @@ export default function LoginPage() {
           <SetuLogo />
           <CardTitle className="text-2xl font-bold">SETU</CardTitle>
           <CardDescription>
-            Sign in as a <span className="font-semibold">{roleName}</span>
+            Sign in or create an account as a <span className="font-semibold">{roleName}</span>
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
@@ -68,14 +68,17 @@ export default function LoginPage() {
             <Input id="password" type="password" required suppressHydrationWarning />
           </div>
         </CardContent>
-        <CardFooter>
+        <CardFooter className="flex flex-col gap-4">
           <Button asChild className="w-full">
             <Link href={loginUrl}>Login</Link>
+          </Button>
+          <Button asChild className="w-full" variant="outline">
+            <Link href="#">Sign Up</Link>
           </Button>
         </CardFooter>
       </Card>
       <p className="mt-4 text-center text-sm text-muted-foreground">
-        This is a simulated login. No real authentication is performed.
+        This is a simulated login/signup flow. No real authentication is performed.
       </p>
     </main>
   );
